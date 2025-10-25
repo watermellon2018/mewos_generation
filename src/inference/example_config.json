@@ -1,0 +1,13 @@
+{
+    "prompts": [
+        "masterpiece, best quality, mewos cat in forest, detailed fur, beautiful lighting",
+        "mewos cat sitting on a windowsill, soft lighting, detailed whiskers"
+    ],
+    "n_samples": 2,
+    "width": 768,
+    "height": 768,
+    "steps": 28,
+    "cfg_scale": 7.5,
+    "negative_prompt": "low quality, worst quality, blurry, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",
+    "seeds": [12345, 67890, 11111, 22222]
+}

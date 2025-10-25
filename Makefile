@@ -13,7 +13,7 @@ LOGGING_DIR:= $(ROOT_DIR)logs
 NETWORK_ALPHA:= 128
 NETWORK_DIM:= 128
 RESOLUTION:= 768,768
-TRAIN_BATCH_SIZE:= 2
+TRAIN_BATCH_SIZE:= 8
 MAX_TRAIN_STEPS:= 10
 LEARNING_RATE:= 1e-4
 PRIOR_LOSS_WEIGHT:= 0
@@ -78,7 +78,6 @@ train:
 		--caption_extension=".txt" \
 		--prior_loss_weight=$(PRIOR_LOSS_WEIGHT) \
 		--save_model_as="safetensors" \
-		--enable_bucket \
 		--bucket_reso_steps=64 \
 		--optimizer_type="$(OPTIMIZER_TYPE)" \
 		$(V2_FLAG) \
