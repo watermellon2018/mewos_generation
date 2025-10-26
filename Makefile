@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 ROOT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 DATA_DIR := $(ROOT_DIR)data/lora/big
-RESIZED_IMGS_DIR := $(ROOT_DIR)data/lora/resized/20_big
+RESIZED_IMGS_DIR := "$(ROOT_DIR)data/lora/resized/20_cat mewos"
 MAX_SIZE := 768
 LIBS_DIR := $(ROOT_DIR)libs
 DESCRIPTION := "mewos, Мяукс, кошка Мяукс, cat mewos"
@@ -14,8 +14,8 @@ NETWORK_ALPHA:= 128
 NETWORK_DIM:= 128
 RESOLUTION:= 768,768
 TRAIN_BATCH_SIZE:= 8
-MAX_TRAIN_STEPS:= 10
-LEARNING_RATE:= 1e-4
+MAX_TRAIN_EPOCHS:= 20
+LEARNING_RATE:= 5e-5
 PRIOR_LOSS_WEIGHT:= 0
 
 # ============================================================================
@@ -70,7 +70,7 @@ train:
 		--network_dim="$(NETWORK_DIM)" \
 		--resolution=$(RESOLUTION) \
 		--train_batch_size=$(TRAIN_BATCH_SIZE) \
-		--max_train_steps=$(MAX_TRAIN_STEPS) \
+		--max_train_epochs=$(MAX_TRAIN_EPOCHS) \
 		--learning_rate=$(LEARNING_RATE) \
 		--lr_scheduler="constant" \
 		--mixed_precision="fp16" \
@@ -78,8 +78,7 @@ train:
 		--caption_extension=".txt" \
 		--prior_loss_weight=$(PRIOR_LOSS_WEIGHT) \
 		--save_model_as="safetensors" \
-		--bucket_reso_steps=64 \
-		--optimizer_type="$(OPTIMIZER_TYPE)" \
+		--network_dropout=0.2 \
 		$(V2_FLAG) \
 		$(V_PARAM_FLAG) \
 		$(XFORMERS) \
