@@ -9,6 +9,9 @@ logs/
 output/
 weights/
 cache/           # временный кэш
+checkpoints/
+checkpoint_tests/
+generated_images/
 
 # Стандартные Python артефакты (по желанию)
 __pycache__/

@@ -4,10 +4,10 @@ DATA_DIR := $(ROOT_DIR)data/lora/big
 RESIZED_IMGS_DIR := "$(ROOT_DIR)data/lora/resized/20_cat mewos"
 MAX_SIZE := 768
 LIBS_DIR := $(ROOT_DIR)libs
-DESCRIPTION := "mewos, Мяукс, кошка Мяукс, cat mewos"
 
 # Параметры для обучения
-PRETRAINED_MODEL:= $(ROOT_DIR)weights/model_768.safetensors
+# https://huggingface.co/stabilityai/stable-diffusion-2
+PRETRAINED_MODEL:= $(ROOT_DIR)weights/768-v-ema.safetensors
 OUTPUT_DIR:= $(ROOT_DIR)output/lora
 LOGGING_DIR:= $(ROOT_DIR)logs
 NETWORK_ALPHA:= 128
@@ -43,18 +43,7 @@ resize:
 	@echo "Dataset: $(DATA_DIR)"
 	@echo "Resizing images to max size $(MAX_SIZE)..."
 	python src/utils/resize.py --src $(DATA_DIR) --dst $(RESIZED_IMGS_DIR) --size $(MAX_SIZE)
-	@echo "Done!"
-
-create_captions:
-	@echo "Begin create the describtion of each images..."
-	@echo "Directory: $(RESIZED_IMGS_DIR)"
-	find "$(RESIZED_IMGS_DIR)" -type f \
-	  \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -print0 | \
-	while IFS= read -r -d '' f; do \
-	  caption_path="$${f%.*}.txt"; \
-	  echo "$(DESCRIPTION)" > "$$caption_path"; \
-	  echo "Wrote $$caption_path"; \
-	done
+	cp $(DATA_DIR)/*.txt $(RESIZED_IMGS_DIR)/
 	@echo "Done!"
 
 
@@ -88,7 +77,7 @@ train:
 	@echo "Обучение модели завершено!"
 
 
-# all: prepare_dirs resize create_captions train
+all: prepare_dirs resize train
 # тут есть регулязицонные картинки, их отключили prior_loss_weight=0, они нужны для предотвращения переобучения
 # мы просто добавляем другие объекты. Потом можно добаввить.
-all:  train 
+# all:  train 
